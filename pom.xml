@@ -38,6 +38,7 @@
         <module>daxpay-demo</module>
     </modules>
     <properties>
+        <revision>4.0.0-beta11</revision>
         <java.version>25</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
@@ -62,7 +63,51 @@
         <fesod.version>2.1.0-incubating</fesod.version>
         <!-- Artemis 客户端与运维面板 broker 镜像(2.57.0)对齐（Spring Boot 4.1.1 默认 2.53.0） -->
         <artemis.version>2.57.0</artemis.version>
+        <!--spring-cloud-->
+        <spring-cloud.version>2025.1.2</spring-cloud.version>
+        <!-- alibaba依赖项-->
+        <spring-cloud-alibaba.version>2025.1.0.0</spring-cloud-alibaba.version>
+        <nacos.client.version>3.3.0</nacos.client.version>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- 关键：显式导入 Spring Cloud BOM，它会消费上面的 spring-cloud.version 属性 -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.nacos</groupId>
+                <artifactId>nacos-client</artifactId>
+                <version>${nacos.client.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.alibaba.nacos</groupId>
+                        <artifactId>nacos-log4j2-adapter</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.alibaba.nacos</groupId>
+                        <artifactId>nacos-logback-adapter-12</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.alibaba.nacos</groupId>
+                        <artifactId>logback-adapter</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>

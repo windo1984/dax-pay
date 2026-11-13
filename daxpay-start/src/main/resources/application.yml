@@ -52,3 +52,31 @@ sa-token:
   cookie:
     http-only: true
     same-site: Lax
+--- # nacos 配置
+spring:
+  cloud:
+    nacos:
+      # nacos 服务地址
+      server-addr: 192.168.101.5:38848
+      username: nacos
+      password: nacos
+      discovery:
+        # 注册组
+        group: DEFAULT_GROUP
+        namespace: daxpay_ft
+      config:
+        # 配置组
+        group: DEFAULT_GROUP
+        namespace: daxpay_ft
+        username: nacos
+        password: nacos
+  config:
+    import:
+      - optional:nacos:application-common.yml
+      - optional:nacos:datasource.yml
+      - optional:nacos:cache-redis.yml
+      - optional:nacos:mq-artemis.yml
+      - optional:nacos:cache-jms.yml
+      - optional:nacos:daxpay-platform.yml
+      - optional:nacos:daxpay-channel.yml
+      - optional:nacos:${spring.application.name}.yml
