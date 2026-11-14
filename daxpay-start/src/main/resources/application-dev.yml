@@ -42,7 +42,7 @@ spring:
     mode: native
     # Broker 连接地址
     # 主机名 mq, 由本机 hosts 映射到 192.168.188.1
-    broker-url: tcp://192.168.101.5:61616
+    broker-url: tcp://192.168.101.5:61616?clientFailureCheckPeriod=5000&connectionTTL=15000&callTimeout=10000&reconnectAttempts=-1&retryInterval=2000&retryIntervalMultiplier=1.5&maxRetryInterval=8000&tcp-nodelay=true
     # broker 账号（与容器启动环境变量一致）
     user: admin
     password: admin
