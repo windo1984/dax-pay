@@ -57,7 +57,7 @@ spring:
   cloud:
     nacos:
       # nacos 服务地址
-      server-addr: 192.168.101.5:38848
+      server-addr: 192.168.101.100:38848
       username: nacos
       password: nacos
       discovery:
