@@ -5,10 +5,12 @@ import cn.daxpay.open.platform.core.annotation.IgnoreAuth;
 import cn.daxpay.open.platform.core.annotation.NonceVerification;
 import cn.daxpay.open.platform.core.rest.Res;
 import cn.daxpay.open.platform.core.rest.result.Result;
+import cn.daxpay.open.platform.iam.auth.service.IamSsoService;
 import cn.daxpay.open.platform.iam.auth.service.LoginContentService;
 import cn.daxpay.open.platform.iam.auth.service.SecondCheckService;
 import cn.daxpay.open.platform.iam.param.auth.LoginContentParam;
 import cn.daxpay.open.platform.iam.param.auth.SecondVerifyParam;
+import cn.daxpay.open.platform.iam.param.auth.SsoLoginParam;
 import cn.daxpay.open.platform.iam.result.auth.LoginContentResult;
 import cn.daxpay.open.platform.iam.result.auth.SecondCheckResult;
 import cn.daxpay.open.platform.iam.auth.service.TokenService;
@@ -35,6 +37,8 @@ public class TokenEndpoint {
     private final LoginContentService loginContentService;
 
     private final SecondCheckService secondCheckService;
+
+    private final IamSsoService iamSsoService;
 
     private final PlatformConfigProperties platformConfigProperties;
 
@@ -69,6 +73,13 @@ public class TokenEndpoint {
                                        @RequestBody SecondVerifyParam param) {
         return Res.ok(tokenService.secondVerify(request, response,
                 param.getPreAuthToken(), param.getCode(), param.getCodeType()));
+    }
+
+    @Operation(summary = "统一认证 ticket 登录")
+    @PostMapping("/sso/iam-login")
+    public Result<String> ssoIamLogin(HttpServletRequest request, HttpServletResponse response,
+                                     @RequestBody SsoLoginParam param) {
+        return Res.ok(iamSsoService.loginByTicket(param.getTicket(), request, response));
     }
 
     @Operation(summary = "退出")
